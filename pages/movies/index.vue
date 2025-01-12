@@ -1,8 +1,6 @@
-<script setup lang="ts"></script>
-
 <template>
   <div>
-    Page: movies
+    <MovieSearch />
   </div>
 </template>
 
