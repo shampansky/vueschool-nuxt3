@@ -1,9 +1,9 @@
 <script setup>
 const route = useRoute();
-const { data } = useFetch(
+const { data } = await useFetch(
   `http://www.omdbapi.com/?apikey=876937fd&i=${route.params.movieId}`,
   {
-    pick: ["Title"],
+    pick: ["Plot", "Title", "Poster"],
     key: `/movies/${route.params.movieId}`,
     onResponse({ request, response }) {
       console.log(response._data);
@@ -14,6 +14,15 @@ const { data } = useFetch(
     server: true,
   },
 );
+useHead({
+  title: data.value.Title,
+  meta: [
+    {name: "description", content: data.value.Plot},
+    {name: "og:description", content: data.value.Plot},
+    {name: "og:image", content: data.value.Poster},
+    {name: "twitter:card", content: 'summary_large_image'},
+  ]
+})
 /*
 const { data } = useAsyncData(
   `/movies/${route.params.movieId}`,
